@@ -1,0 +1,14 @@
+{
+  "name": "product-api",
+  "version": "1.0.0",
+  "description": "An api for products",
+  "author": "Ariya Fathizadeh",
+  "type": "commonjs",
+  "main": "productsRoutes.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
