@@ -87,7 +87,7 @@ curl -X DELETE http://localhost:3000/products/1
 
 ## Notes
 
-Data is currently stored in memory and resets whenever the server restarts. A future improvement is connecting the API to a real database (e.g. MongoDB).
+Data is currently stored in memory and resets whenever the server restarts. A future improvement is connecting the API to a real database.
 
 ## Author
 
