@@ -12,12 +12,13 @@ This project was built from scratch as an independent practice project after lea
 - Custom `checkStock` middleware — only allows deleting a product if it is **out of stock** (`inStock: false`)
   - Returns `404` if the product doesn't exist
   - Returns `400` if the product is still in stock
+- Added real database connection
 
 ## Tech Stack
 
 - Node.js
 - Express.js
-- nodemon (for development)
+- MongoDB (Database)
 
 ## Project Structure
 
