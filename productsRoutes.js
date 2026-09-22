@@ -1,96 +1,118 @@
 const express = require("express");
 const { error } = require("node:console");
 const router = express.Router();
+const Product = require("./productschema");
 
-let products = [
-  { id: 1, name: "Laptop", price: 25000000, category: "Electronics", inStock: true },
-  { id: 2, name: "Old Phone", price: 3000000, category: "Electronics", inStock: false },
-  { id: 3, name: "Desk Chair", price: 4500000, category: "Furniture", inStock: true }
-];
-let nextId = 4;
 
-function checkStock(request, response, next){
-    let id = Number(request.params.id);
-    let selectedProduct = products.find((product) => product.id === id);
+async function checkStock(request, response, next){
+    try {
+        let selectedProduct = await Product.findById(request.params.id);
 
-    if(!selectedProduct){
-        let error = new Error("Product not found!")
-        error.statusCode = 404;
-        return next(error);
+        if(!selectedProduct){
+            let error = new Error("Product not found!")
+            error.statusCode = 404;
+            return next(error);
+        }
+
+        if(selectedProduct.inStock === true){
+            let error = new Error("Cannot delete a product that is in stock!")
+            error.statusCode = 400;
+            return next(error);
+        }
+
+        next();
+    } catch (error) {
+        next(error)
     }
-
-    if(selectedProduct.inStock === true){
-        let error = new Error("Cannot delete a product that is in stock!")
-        error.statusCode = 400;
-        return next(error);
-    }
-
-    next();
 }
 
 
 
-router.get("/", (request, response, next) => {
-    response.json(products)
-})
-
-router.get("/:id", (request, response, next) =>{
-    let id = Number(request.params.id);
-    let selectedProduct = products.find((product) => product.id === id);
-
-    if(!selectedProduct){
-        let error = new Error("Product not found");
-        error.statusCode = 404;
-        return next(error);
+router.get("/", async (request, response, next) => {
+    try {
+        let products = await Product.find();
+        response.json(products);
+    } catch (error) {
+        next(error)
     }
-
-    response.json(selectedProduct);
 })
 
-router.post("/", (request, response, next) => {
-    let product = {
-        id: nextId,
+router.get("/:id", async (request, response, next) =>{
+    try {
+        let product = await Product.findById(request.params.id);
+
+        if(!product){
+            let error = new Error("Product not found")
+            error.statusCode = 404;
+            return next(error)
+        }
+
+        response.json(product);
+    } catch (error) {
+        next(error);
+    }
+})
+
+
+router.post("/", async (request, response, next) => {
+    try {
+
+    let newProduct = new Product({
         name: request.body.name,
         price: request.body.price,
         category: request.body.category,
         inStock: request.body.inStock
+
+    })
+    let savedProduct = await newProduct.save();
+
+
+    response.status(201).json(savedProduct)
+
+    } catch (error) {
+        next(error)
     }
-
-    products.push(product);
-    nextId++;
-
-    response.status(201).json({message: "Product has been added"})
 })
 
-router.put("/:id", (request, response, next) => {
-    let id = Number(request.params.id);
-    let updateProduct = products.find((product) => product.id === id);
+router.put("/:id", async (request, response, next) => {
+    try {
+        
+    let updateProduct = await Product.findByIdAndUpdate(request.params.id, ({
+        name: request.body.name,
+        price: request.body.price,
+        category: request.body.category,
+        inStock: request.body.inStock
+    }), {new: true});
 
     if(!updateProduct){
         let error = new Error("Product not found");
         error.statusCode = 404;
         return next(error);
     }
-    updateProduct.name = request.body.name
-    updateProduct.price = request.body.price
-    updateProduct.category = request.body.category
-    updateProduct.inStock = request.body.inStock
 
-    response.status(200).json({message: "Product updated"});
+    response.status(200).json(updateProduct);
+
+    } catch (error) {
+        next(error);
+    }
 })
 
-router.delete("/:id", checkStock,(request, response, next) => {
-    let id = Number(request.params.id);
-    let productIndex = products.findIndex((product) => product.id === id);
+router.delete("/:id", checkStock, async (request, response, next) => {
+    try {
+        
+    let deletedProduct = await Product.findByIdAndDelete(request.params.id);
 
-    if(productIndex === -1){
+    if(!deletedProduct){
         let error = new Error("Product not found");
         error.statusCode = 404;
         return next(error);
     }
 
-    products.splice(productIndex, 1);
-    response.status(200).json({message: "Product deleted"})
+    response.status(200).json({message: `Product deleted`});
+
+    } catch (error) {
+        next(error);
+    }
 })
 
 
