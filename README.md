@@ -1,94 +1,65 @@
-# Simple Products API
+# Products API — Full-Stack CRUD Project
 
-A simple RESTful API for managing products, built with **Express.js**.
-This project was built from scratch as an independent practice project after learning Express fundamentals: routing, middleware, and centralized error handling.
+A full-stack product management app built as part of my self-taught journey into web development. It lets you view, add, update, and delete products, with all data persisted in a real MongoDB database.
 
-## Features
+> **Note:** I'm a self-taught developer learning with the help of AI (Claude). The backend logic, frontend JavaScript, and overall architecture were written and debugged by me through a guided, question-and-answer style of learning — the AI explained concepts and asked me to solve problems myself rather than handing me finished code. The CSS styling in this project was written by AI.
 
-- Full CRUD for products (Create, Read, Update, Delete)
-- Clean file structure using `express.Router()` (routes separated from the server file)
-- Custom logging middleware — logs every incoming request
+## What it does
+
+- View all products in a clean, responsive card grid
+- Add a new product through a form (name, price, category, stock status)
+- Toggle a product's stock status with one click
+- Delete a product — with a business rule that blocks deleting products still in stock
+- Fully responsive layout that adapts from desktop down to mobile
+
+## Tech stack
+
+**Backend**
+- Node.js + Express.js
+- MongoDB Atlas with Mongoose (schema, model, CRUD operations)
 - Centralized error-handling middleware
-- Custom `checkStock` middleware — only allows deleting a product if it is **out of stock** (`inStock: false`)
-  - Returns `404` if the product doesn't exist
-  - Returns `400` if the product is still in stock
+- Custom middleware (e.g. blocking deletion of in-stock products)
+- `dotenv` for keeping the database connection string out of source code
+- `cors` for allowing the frontend to communicate with the API
 
-## Tech Stack
+**Frontend**
+- Vanilla HTML, CSS, and JavaScript (no frameworks)
+- `fetch` API for all communication with the backend (GET, POST, PATCH, DELETE)
+- Event delegation for handling dynamically rendered buttons
+- Google Fonts (Inter)
 
-- Node.js
-- Express.js
-- nodemon (for development)
-
-## Project Structure
+## Project structure
 
 ```
-simple-products-api/
-├── server.js          # App entry point, middleware setup
-├── productsRoutes.js  # Product routes (Router)
-├── package.json
-└── .gitignore
+product-api/
+├── backend/
+│   ├── server.js
+│   ├── productsRoutes.js
+│   ├── productschema.js
+│   ├── .env              (not committed — holds the MongoDB connection string)
+│   └── package.json
+│
+├── frontend/
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+│
+└── README.md
 ```
 
-## Getting Started
+## Running it locally
 
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) installed on your machine
-
-### Installation
-
+**Backend:**
 ```bash
-git clone https://github.com/Ariyafz19/simple-products-api.git
-cd simple-products-api
+cd backend
 npm install
-```
-
-### Run the server
-
-```bash
 node server.js
 ```
+The API runs on `http://localhost:3000`.
 
-Or, with `nodemon` (if installed):
+**Frontend:**
+Open `frontend/index.html` with a tool like Live Server (or any local static server). Make sure the backend is running first, since the frontend fetches data from it directly.
 
-```bash
-nodemon server.js
-```
+## What I learned building this
 
-The server will start on `http://localhost:3000` (adjust if your port is different).
-
-## API Endpoints
-
-| Method | Endpoint             | Description                          |
-|--------|-----------------------|---------------------------------------|
-| GET    | `/products`           | Get all products                     |
-| GET    | `/products/:id`       | Get a single product by ID           |
-| POST   | `/products`           | Create a new product                 |
-| PUT    | `/products/:id`       | Update an existing product           |
-| DELETE | `/products/:id`       | Delete a product (only if `inStock: false`) |
-
-### Example: Create a product
-
-```bash
-curl -X POST http://localhost:3000/products \
-  -H "Content-Type: application/json" \
-  -d '{"name": "Keyboard", "price": 45, "inStock": true}'
-```
-
-### Example: Delete a product
-
-```bash
-curl -X DELETE http://localhost:3000/products/1
-```
-
-- Returns `400` if the product is still in stock (`inStock: true`)
-- Returns `404` if no product with that ID exists
-- Returns `200` if the product was deleted successfully
-
-## Notes
-
-Data is currently stored in memory and resets whenever the server restarts. A future improvement is connecting the API to a real database.
-
-## Author
-
-Built by [Ariyafz19](https://github.com/Ariyafz19) as part of a self-taught journey toward becoming a web developer.
+This project was where I connected everything I'd learned separately — Express routing, middleware, MongoDB/Mongoose, async JavaScript, and DOM manipulation — into one working full-stack app. Along the way I debugged real issues on my own, including a CORS error, a MongoDB update bug that was silently wiping other fields, a stuck toggle button caused by comparing strings instead of booleans, and a `.env` file not loading because of how Node resolves relative paths.

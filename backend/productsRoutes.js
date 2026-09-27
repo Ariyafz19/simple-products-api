@@ -74,15 +74,14 @@ router.post("/", async (request, response, next) => {
     }
 })
 
-router.put("/:id", async (request, response, next) => {
+router.patch("/:id", async (request, response, next) => {
     try {
         
-    let updateProduct = await Product.findByIdAndUpdate(request.params.id, ({
-        name: request.body.name,
-        price: request.body.price,
-        category: request.body.category,
-        inStock: request.body.inStock
-    }), {new: true});
+    let updateProduct = await Product.findByIdAndUpdate(
+            request.params.id, 
+            request.body,
+            {new: true}
+        );
 
     if(!updateProduct){
         let error = new Error("Product not found");
