@@ -18,9 +18,16 @@ A full-stack product management app built as part of my self-taught journey into
 - Node.js + Express.js
 - MongoDB Atlas with Mongoose (schema, model, CRUD operations)
 - Centralized error-handling middleware
+<<<<<<< HEAD
 - Custom middleware (e.g. blocking deletion of in-stock products)
 - `dotenv` for keeping the database connection string out of source code
 - `cors` for allowing the frontend to communicate with the API
+=======
+- Custom `checkStock` middleware — only allows deleting a product if it is **out of stock** (`inStock: false`)
+  - Returns `404` if the product doesn't exist
+  - Returns `400` if the product is still in stock
+- Added real database connection
+>>>>>>> fc1fa72287ea21fcdf2d1785f8bca2ae37fcfaf2
 
 **Frontend**
 - Vanilla HTML, CSS, and JavaScript (no frameworks)
@@ -28,7 +35,15 @@ A full-stack product management app built as part of my self-taught journey into
 - Event delegation for handling dynamically rendered buttons
 - Google Fonts (Inter)
 
+<<<<<<< HEAD
 ## Project structure
+=======
+- Node.js
+- Express.js
+- MongoDB (Database)
+
+## Project Structure
+>>>>>>> fc1fa72287ea21fcdf2d1785f8bca2ae37fcfaf2
 
 ```
 product-api/
