@@ -27,7 +27,6 @@ A full-stack product management app built as part of my self-taught journey into
   - Returns `404` if the product doesn't exist
   - Returns `400` if the product is still in stock
 - Added real database connection
->>>>>>> fc1fa72287ea21fcdf2d1785f8bca2ae37fcfaf2
 
 **Frontend**
 - Vanilla HTML, CSS, and JavaScript (no frameworks)
@@ -35,7 +34,6 @@ A full-stack product management app built as part of my self-taught journey into
 - Event delegation for handling dynamically rendered buttons
 - Google Fonts (Inter)
 
-<<<<<<< HEAD
 ## Project structure
 =======
 - Node.js
@@ -43,7 +41,6 @@ A full-stack product management app built as part of my self-taught journey into
 - MongoDB (Database)
 
 ## Project Structure
->>>>>>> fc1fa72287ea21fcdf2d1785f8bca2ae37fcfaf2
 
 ```
 product-api/
