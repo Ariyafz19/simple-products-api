@@ -27,6 +27,8 @@ A full-stack product management app built as part of my self-taught journey into
   - Returns `404` if the product doesn't exist
   - Returns `400` if the product is still in stock
 - Added real database connection
+- Bcrypt for password hashing
+- JWT Authentication for authorizing
 
 **Frontend**
 - Vanilla HTML, CSS, and JavaScript (no frameworks)
