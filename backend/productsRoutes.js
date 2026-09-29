@@ -2,6 +2,7 @@ const express = require("express");
 const { error } = require("node:console");
 const router = express.Router();
 const Product = require("./productschema");
+const authMiddleware = require("./authMiddleware");
 
 
 async function checkStock(request, response, next){
@@ -54,7 +55,7 @@ router.get("/:id", async (request, response, next) =>{
 })
 
 
-router.post("/", async (request, response, next) => {
+router.post("/", authMiddleware ,async (request, response, next) => {
     try {
 
     let newProduct = new Product({
@@ -74,7 +75,7 @@ router.post("/", async (request, response, next) => {
     }
 })
 
-router.patch("/:id", async (request, response, next) => {
+router.patch("/:id", authMiddleware ,async (request, response, next) => {
     try {
         
     let updateProduct = await Product.findByIdAndUpdate(
@@ -96,7 +97,7 @@ router.patch("/:id", async (request, response, next) => {
     }
 })
 
-router.delete("/:id", checkStock, async (request, response, next) => {
+router.delete("/:id", authMiddleware ,checkStock, async (request, response, next) => {
     try {
         
     let deletedProduct = await Product.findByIdAndDelete(request.params.id);
