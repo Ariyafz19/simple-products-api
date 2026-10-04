@@ -5,15 +5,27 @@ const productName = document.getElementById("name");
 const productPrice = document.getElementById("price");
 const productCategory = document.getElementById("category")
 const productInStock = document.getElementById("inStock")
+const loginForm = document.getElementById("login-form")
+const loginUsername = document.getElementById("login-username");
+const loginPassword = document.getElementById("login-password");
+const loginStatus = document.getElementById("login-status");
 
 
 addProductForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+    let token = localStorage.getItem("token");
+
+    if(!token){
+        window.alert("Please login first");
+        return;
+    }
+
     try {
         let product = await fetch("http://localhost:3000/api/products", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({
                 name: productName.value , 
@@ -54,44 +66,48 @@ function displayProducts(products) {
 }
 
 productContainer.addEventListener("click", async (event) => {
-
+    let token = localStorage.getItem("token");
+    
+    if(!token){
+        window.alert("Please login first");
+        return;
+    }
     try {
         if(event.target.classList.contains("deleteBtn")){
 
             let product = await fetch(`http://localhost:3000/api/products/${event.target.dataset.id}`, {
-                method: "DELETE"
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
         })
             if(!product.ok){
                 let dataError = await product.json();
                 window.alert(dataError.error)
             }
-        connectAPI();
         }
-    } catch (error) {
-        console.log(`Somthing went wtong: ${error}`)
-    }
-    
-})
 
-productContainer.addEventListener("click", async (event) =>{
-    try {
         if(event.target.classList.contains("toggleBtn")){
             let product =  await fetch(`http://localhost:3000/api/products/${event.target.dataset.id}`,{
                 method: "PATCH",
-                headers: {"Content-Type": "application/json"},
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
                 body: JSON.stringify({inStock: event.target.dataset.inStock !== "true"})
         })
             if(!product.ok){
                 let errorData = await product.json();
                 window.alert(errorData.error);
             }
-            connectAPI();
     }
-    } catch (error) {
-        console.log(`Somthing went wrong: ${error}`)
-    }
-})
 
+    connectAPI();
+    } catch (error) {
+        console.log(`Somthing went wtong: ${error}`)
+    }
+    
+})
 
 
 async function connectAPI() {
@@ -103,5 +119,37 @@ async function connectAPI() {
         console.log(`Somthing went wrong ${error}`)
     }
 }
+
+loginForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    try {
+        let send = await fetch("http://localhost:3000/api/auth/login",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username: loginUsername.value,
+                password: loginPassword.value
+            })
+        }
+        )
+
+        if(!send.ok){
+            let errorData = await send.json();
+            loginStatus.textContent = errorData.error;
+            return;
+        }
+
+        let data = await send.json();
+        localStorage.setItem("token", data.token)
+        loginStatus.textContent = "Login succesful!"
+
+    } catch (error) {
+        console.log(error);
+        loginStatus.textContent = error;
+    }
+
+})
 
 connectAPI();
