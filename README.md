@@ -22,12 +22,18 @@ A full-stack product management app built as part of my self-taught journey into
 - Custom `checkStock` middleware — only allows deleting a product if it is **out of stock** (`inStock: false`)
   - Returns `404` if the product doesn't exist
   - Returns `400` if the product is still in stock
+<<<<<<< HEAD
 - JWT authentication (`jsonwebtoken`)
   - Passwords hashed with `bcrypt` before being saved (never stored in plain text)
   - `authMiddleware` protects all POST/PATCH/DELETE product routes — GET stays public
   - Login returns a generic "Invalid username or password" error for both a wrong username and a wrong password, to avoid leaking which usernames exist
 - `dotenv` for keeping the database connection string and JWT secret out of source code
 - `cors` for allowing the frontend to communicate with the API
+=======
+- Added real database connection
+- Bcrypt for password hashing
+- JWT Authentication for authorizing
+>>>>>>> 4c943d5370c6d04f04ff8a49bc026b79752a1125
 
 **Frontend**
 - Vanilla HTML, CSS, and JavaScript (no frameworks)
