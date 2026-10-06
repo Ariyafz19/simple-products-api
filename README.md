@@ -12,6 +12,7 @@ A full-stack product management app built as part of my self-taught journey into
 - Toggle a product's stock status with one click — requires login
 - Delete a product — requires login, and blocked by a business rule if the product is still in stock
 - Fully responsive layout that adapts from desktop down to mobile
+- Register an account and log in to receive a JWT
 
 ## Tech stack
 

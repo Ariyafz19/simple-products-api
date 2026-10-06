@@ -9,6 +9,9 @@ const loginForm = document.getElementById("login-form")
 const loginUsername = document.getElementById("login-username");
 const loginPassword = document.getElementById("login-password");
 const loginStatus = document.getElementById("login-status");
+const logoutBtn = document.getElementById("logout-btn");
+const header = document.getElementById("header")
+const welcomeMessage = document.getElementById("welcome-message")
 
 
 addProductForm.addEventListener("submit", async (event) => {
@@ -68,12 +71,13 @@ function displayProducts(products) {
 productContainer.addEventListener("click", async (event) => {
     let token = localStorage.getItem("token");
     
-    if(!token){
-        window.alert("Please login first");
-        return;
-    }
     try {
         if(event.target.classList.contains("deleteBtn")){
+
+            if(!token){
+                window.alert("Please login first");
+                return;
+            }
 
             let product = await fetch(`http://localhost:3000/api/products/${event.target.dataset.id}`, {
                 method: "DELETE",
@@ -88,6 +92,12 @@ productContainer.addEventListener("click", async (event) => {
         }
 
         if(event.target.classList.contains("toggleBtn")){
+
+            if(!token){
+                window.alert("Please login first");
+                return;
+            }
+
             let product =  await fetch(`http://localhost:3000/api/products/${event.target.dataset.id}`,{
                 method: "PATCH",
                 headers: {
@@ -149,7 +159,37 @@ loginForm.addEventListener("submit", async (event) => {
         console.log(error);
         loginStatus.textContent = error;
     }
-
+    checkLoginStatus();
 })
 
+logoutBtn.addEventListener("click", (event) => {
+    let token = localStorage.getItem("token")
+
+    if(!token){
+        window.alert("You are not logged in!")
+        return;
+    }
+
+    localStorage.removeItem("token")
+    window.alert("Logged out succesfuly!")
+    checkLoginStatus();
+})
+
+
+function checkLoginStatus() {
+  let token = localStorage.getItem("token");
+
+
+    if (token) {
+        loginForm.style.display = "none";
+        welcomeMessage.style.display = "block";  
+        logoutBtn.style.display = "flex";
+    } else {
+        loginForm.style.display = "flex";
+        welcomeMessage.style.display = "none";  
+        logoutBtn.style.display = "none";
+    }
+}
+
+checkLoginStatus();
 connectAPI();
