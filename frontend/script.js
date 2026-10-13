@@ -13,6 +13,8 @@ const logoutBtn = document.getElementById("logout-btn");
 const header = document.getElementById("header")
 const welcomeMessage = document.getElementById("welcome-message")
 
+const API_URL = "https://simple-api-5e8c.onrender.com";
+
 
 addProductForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -24,7 +26,7 @@ addProductForm.addEventListener("submit", async (event) => {
     }
 
     try {
-        let product = await fetch("http://localhost:3000/api/products", {
+        let product = await fetch(`${API_URL}/api/products`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -79,7 +81,7 @@ productContainer.addEventListener("click", async (event) => {
                 return;
             }
 
-            let product = await fetch(`http://localhost:3000/api/products/${event.target.dataset.id}`, {
+            let product = await fetch(`${API_URL}/api/products/${event.target.dataset.id}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -98,7 +100,7 @@ productContainer.addEventListener("click", async (event) => {
                 return;
             }
 
-            let product =  await fetch(`http://localhost:3000/api/products/${event.target.dataset.id}`,{
+            let product =  await fetch(`${API_URL}/api/products/${event.target.dataset.id}`,{
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -122,7 +124,7 @@ productContainer.addEventListener("click", async (event) => {
 
 async function connectAPI() {
     try {
-        let result = await fetch("http://localhost:3000/api/products")
+        let result = await fetch(`${API_URL}/api/products`)
         let finalResult =  await result.json();
         return displayProducts(finalResult)
     } catch (error) {
@@ -133,7 +135,7 @@ async function connectAPI() {
 loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     try {
-        let send = await fetch("http://localhost:3000/api/auth/login",{
+        let send = await fetch(`${API_URL}/api/auth/login`,{
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
