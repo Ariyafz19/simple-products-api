@@ -33,7 +33,11 @@ A full-stack product management app built as part of my self-taught journey into
 
 - Added real database connection
 - Bcrypt for password hashing
+<<<<<<< HEAD
 - JWT Authentication for authorizing  
+=======
+- JWT Authentication for authorizing
+>>>>>>> ceca19cbaa96112e655567b8c978d00e3bf7855d
 
 **Frontend**
 - Vanilla HTML, CSS, and JavaScript (no frameworks)
