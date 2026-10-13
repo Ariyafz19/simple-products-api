@@ -9,7 +9,10 @@ const authRoutes = require("./authRoutes");
 
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: ["https://ariyafz19.github.io", "http://localhost:5500", "http://127.0.0.1:5500"]
+}
+))
 
 app.use((request, response, next) =>{
     console.log(`${request.method} - ${request.url}`)
