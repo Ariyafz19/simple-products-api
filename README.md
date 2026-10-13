@@ -33,11 +33,9 @@ A full-stack product management app built as part of my self-taught journey into
 
 - Added real database connection
 - Bcrypt for password hashing
-<<<<<<< HEAD
 - JWT Authentication for authorizing  
-=======
 - JWT Authentication for authorizing
->>>>>>> ceca19cbaa96112e655567b8c978d00e3bf7855d
+
 
 **Frontend**
 - Vanilla HTML, CSS, and JavaScript (no frameworks)
@@ -88,7 +86,6 @@ cd backend
 npm install
 node server.js
 ```
-The API runs on `http://localhost:3000`.
 
 You'll need a `.env` file inside `backend/` with:
 ```
@@ -98,6 +95,12 @@ JWT_SECRET=a_long_random_secret_string
 
 **Frontend:**
 Open `frontend/index.html` with a tool like Live Server (or any local static server). Make sure the backend is running first, since the frontend fetches data from it directly. Register an account and log in through the UI to unlock adding, toggling, and deleting products.
+
+**Live demo:** https://ariyafz19.github.io/simple-products-api/
+
+> The API runs on a free hosting tier, so the first request after a period of inactivity can take up to a minute while the server wakes up.
+
+
 
 ## What I learned building this
 
