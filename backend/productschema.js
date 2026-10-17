@@ -9,9 +9,9 @@ mongoose.connect(process.env.MONGO_URL)
   });
 
 const productSchema = new mongoose.Schema({
-    name: {type: String, required: true},
-    price: {type: Number, required: true},
-    category: {type: String, required: true},
+    name: {type: String, required: true, minlength: [3, "Too short"], maxlength: [99, "Too long"], trim: true},
+    price: {type: Number, required: true, min: [1, "Price must be at least 1"]},
+    category: {type: String, required: true, trim: true, enum: ["Electronics", "Video Games", "Books", "Glasses"]},
     inStock: {type: Boolean, default: true}
 })
 

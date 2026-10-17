@@ -40,6 +40,12 @@ addProductForm.addEventListener("submit", async (event) => {
             })
         })
 
+        if(!product.ok){
+            let newerror = await product.json();
+             window.alert(newerror.error)
+             return;
+        }
+
         addProductForm.reset();
         connectAPI();
     } catch (error) {

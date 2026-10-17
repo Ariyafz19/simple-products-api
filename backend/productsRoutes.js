@@ -81,7 +81,7 @@ router.patch("/:id", authMiddleware ,async (request, response, next) => {
     let updateProduct = await Product.findByIdAndUpdate(
             request.params.id, 
             request.body,
-            {new: true}
+            {new: true,  runValidators: true}
         );
 
     if(!updateProduct){

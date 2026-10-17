@@ -218,3 +218,18 @@ h1 {
 #logout-btn:hover {
   background-color: #fecaca;
 }
+
+#add-product-form select {
+  padding: 10px 14px;
+  border: 1px solid #d1d1d6;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background-color: white;
+  flex: 1;
+  min-width: 140px;
+}
+
+#add-product-form select:focus {
+  outline: none;
+  border-color: #6366f1;
+}
