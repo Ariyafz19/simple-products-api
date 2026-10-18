@@ -23,6 +23,10 @@ app.use("/api/products", productsRoutes);
 app.use("/api/auth", authRoutes);
 
 app.use((error, request, response, next) => {
+    if (error.name === "ValidationError"){ 
+
+        error.statusCode = 400; 
+    }
     let statusCode = error.statusCode || 500;
     response.status(statusCode).json({ error: error.message });
 })
