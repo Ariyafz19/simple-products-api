@@ -89,7 +89,7 @@ node server.js
 
 You'll need a `.env` file inside `backend/` with:
 ```
-MONGO_URI=your_mongodb_connection_string
+MONGO_URL=your_mongodb_connection_string
 JWT_SECRET=a_long_random_secret_string
 ```
 
